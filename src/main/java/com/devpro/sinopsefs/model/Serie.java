@@ -4,9 +4,11 @@ import com.devpro.sinopsefs.dto.MidiaDTO;
 import com.devpro.sinopsefs.enums.Genero;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+@NoArgsConstructor
 @Data
 @Entity
 @Table
@@ -26,6 +28,6 @@ public class Serie extends Midia {
     public Serie(MidiaDTO midia) {
         super(midia.getNome(), midia.getSinopse());
         this.id = midia.getId();
-        this.genero = midia.getGeneros();
+        this.genero = midia.getGenero();
     }
 }

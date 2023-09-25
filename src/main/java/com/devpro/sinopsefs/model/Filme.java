@@ -28,6 +28,6 @@ public class Filme extends Midia{
     public Filme(MidiaDTO midia) {
         super(midia.getNome(), midia.getSinopse());
         this.id = midia.getId();
-        this.genero = midia.getGeneros();
+        this.genero = midia.getGenero();
     }
 }

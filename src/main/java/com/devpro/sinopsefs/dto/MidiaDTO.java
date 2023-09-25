@@ -11,6 +11,6 @@ public class MidiaDTO {
     private Long id;
     private String nome;
     private String sinopse;
-    private List<Genero> generos;
+    private List<Genero> genero;
 
 }
