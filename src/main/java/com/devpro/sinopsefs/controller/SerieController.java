@@ -1,6 +1,7 @@
 package com.devpro.sinopsefs.controller;
 
-import com.devpro.sinopsefs.model.Serie;
+import com.devpro.sinopsefs.dto.MidiaDTO;
+import com.devpro.sinopsefs.service.SerieService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,9 +10,11 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/serie")
 public class SerieController {
 
-    @PostMapping
-    public void cadastarSerie(@RequestBody Serie serie) {
+    private final SerieService serieService;
 
+    @PostMapping
+    public void cadastarSerie(@RequestBody MidiaDTO serie) {
+        serieService.salvarSerie(serie);
     }
 
     @GetMapping
@@ -19,7 +22,7 @@ public class SerieController {
 
     }
 
-    @GetMapping
+    @GetMapping("/nome")
     public void buscarSeriePorNome(@RequestParam String nome) {
 
     }

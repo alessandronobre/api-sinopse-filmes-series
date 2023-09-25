@@ -1,6 +1,7 @@
 package com.devpro.sinopsefs.controller;
 
-import com.devpro.sinopsefs.model.Filme;
+import com.devpro.sinopsefs.dto.MidiaDTO;
+import com.devpro.sinopsefs.service.FilmeService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,9 +10,11 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/filme")
 public class FilmeController {
 
-    @PostMapping
-    public void cadastarFilme(@RequestBody Filme filme) {
+    private final FilmeService filmeService;
 
+    @PostMapping
+    public void cadastarFilme(@RequestBody MidiaDTO filme) {
+        filmeService.salvarFilme(filme);
     }
 
     @GetMapping
@@ -19,7 +22,7 @@ public class FilmeController {
 
     }
 
-    @GetMapping
+    @GetMapping("/nome")
     public void buscarFilmePorNome(@RequestParam String nome) {
 
     }
