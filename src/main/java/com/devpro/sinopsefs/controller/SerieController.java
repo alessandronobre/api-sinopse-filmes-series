@@ -5,6 +5,8 @@ import com.devpro.sinopsefs.service.SerieService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @AllArgsConstructor
 @RestController
 @RequestMapping("/api/serie")
@@ -18,8 +20,8 @@ public class SerieController {
     }
 
     @GetMapping
-    public void buscarListaSeries() {
-
+    public List<MidiaDTO> buscarListaSeries() {
+        return serieService.buscarListaSeries();
     }
 
     @GetMapping("/nome")

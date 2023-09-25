@@ -5,6 +5,8 @@ import com.devpro.sinopsefs.service.FilmeService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @AllArgsConstructor
 @RestController
 @RequestMapping("/api/filme")
@@ -18,8 +20,8 @@ public class FilmeController {
     }
 
     @GetMapping
-    public void buscarListaFilmes() {
-
+    public List<MidiaDTO> buscarListaFilmes() {
+        return filmeService.buscarListaFilmes();
     }
 
     @GetMapping("/nome")
