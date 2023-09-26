@@ -39,6 +39,14 @@ public class FilmeService {
         return null;
     }
 
+    public void editarFilme(MidiaDTO midia) {
+        Filme filme = filmeRepository.findById(midia.getId()).orElseThrow(() -> new RuntimeException("Filme não encontrado"));
+        filme.setNome(midia.getNome());
+        filme.setGenero(midia.getGenero());
+        filme.setSinopse(midia.getSinopse());
+        filmeRepository.save(filme);
+    }
+
     public void deletarFilmePorId(Long id) {
         filmeRepository.deleteById(id);
 

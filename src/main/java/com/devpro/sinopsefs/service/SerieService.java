@@ -1,6 +1,7 @@
 package com.devpro.sinopsefs.service;
 
 import com.devpro.sinopsefs.dto.MidiaDTO;
+import com.devpro.sinopsefs.model.Filme;
 import com.devpro.sinopsefs.model.Serie;
 import com.devpro.sinopsefs.repository.SerieRepository;
 import lombok.AllArgsConstructor;
@@ -42,5 +43,13 @@ public class SerieService {
     public void deletarSeriePorId(Long id) {
         serieRepository.deleteById(id);
 
+    }
+
+    public void editarSerie(MidiaDTO midia) {
+        Serie serie = serieRepository.findById(midia.getId()).orElseThrow(() -> new RuntimeException("Serie não encontrado"));
+        serie.setNome(midia.getNome());
+        serie.setGenero(midia.getGenero());
+        serie.setSinopse(midia.getSinopse());
+        serieRepository.save(serie);
     }
 }

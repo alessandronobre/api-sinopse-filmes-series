@@ -29,6 +29,11 @@ public class FilmeController {
         return filmeService.buscarFilmesPorNome(nome);
     }
 
+    @PutMapping
+    public void editarFilme(@RequestBody MidiaDTO filme) {
+        filmeService.editarFilme(filme);
+    }
+
     @DeleteMapping
     public void deletarFilmePorId(@RequestParam Long id) {
         filmeService.deletarFilmePorId(id);

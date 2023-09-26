@@ -32,6 +32,11 @@ public class SerieController {
 
     }
 
+    @PutMapping
+    public void editarSerie(@RequestBody MidiaDTO filme) {
+        serieService.editarSerie(filme);
+    }
+
     @DeleteMapping
     public void deletarSeriePorId(@RequestParam Long id) {
         serieService.deletarSeriePorId(id);
