@@ -1,7 +1,6 @@
 package com.devpro.sinopsefs.service;
 
 import com.devpro.sinopsefs.dto.MidiaDTO;
-import com.devpro.sinopsefs.model.Filme;
 import com.devpro.sinopsefs.model.Serie;
 import com.devpro.sinopsefs.repository.SerieRepository;
 import lombok.AllArgsConstructor;
