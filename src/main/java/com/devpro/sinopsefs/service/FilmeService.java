@@ -28,4 +28,14 @@ public class FilmeService {
         }
         return null;
     }
+
+    public List<MidiaDTO> buscarFilmesPorNome(String nome) {
+        List<Filme> filmes = filmeRepository.buscarFilmesPorNome(nome);
+        List<MidiaDTO> midias = new ArrayList<>();
+        if (!filmes.isEmpty()) {
+            filmes.stream().forEach(filme -> midias.add(new MidiaDTO(filme)));
+            return midias;
+        }
+        return null;
+    }
 }

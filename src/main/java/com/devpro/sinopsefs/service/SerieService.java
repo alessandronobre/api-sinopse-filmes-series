@@ -29,4 +29,14 @@ public class SerieService {
         }
         return null;
     }
+
+    public List<MidiaDTO> buscarSeriesPorNome(String nome) {
+        List<Serie> series = serieRepository.buscarSeriesPorNome(nome);
+        List<MidiaDTO> midias = new ArrayList<>();
+        if (!series.isEmpty()) {
+            series.stream().forEach(filme -> midias.add(new MidiaDTO(filme)));
+            return midias;
+        }
+        return null;
+    }
 }

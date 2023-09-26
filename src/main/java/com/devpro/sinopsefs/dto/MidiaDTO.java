@@ -3,10 +3,12 @@ package com.devpro.sinopsefs.dto;
 import com.devpro.sinopsefs.enums.Genero;
 import com.devpro.sinopsefs.model.Filme;
 import com.devpro.sinopsefs.model.Serie;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.util.List;
 
+@AllArgsConstructor
 @Data
 public class MidiaDTO {
 

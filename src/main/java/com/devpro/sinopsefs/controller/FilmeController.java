@@ -25,8 +25,8 @@ public class FilmeController {
     }
 
     @GetMapping("/nome")
-    public void buscarFilmePorNome(@RequestParam String nome) {
-
+    public List<MidiaDTO> buscarFilmesPorNome(@RequestParam String nome) {
+        return filmeService.buscarFilmesPorNome(nome);
     }
 
     @DeleteMapping

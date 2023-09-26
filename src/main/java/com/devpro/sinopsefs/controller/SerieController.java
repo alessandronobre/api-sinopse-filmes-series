@@ -17,15 +17,18 @@ public class SerieController {
     @PostMapping
     public void cadastarSerie(@RequestBody MidiaDTO serie) {
         serieService.salvarSerie(serie);
+
     }
 
     @GetMapping
     public List<MidiaDTO> buscarListaSeries() {
         return serieService.buscarListaSeries();
+
     }
 
     @GetMapping("/nome")
-    public void buscarSeriePorNome(@RequestParam String nome) {
+    public List<MidiaDTO> buscarSeriePorNome(@RequestParam String nome) {
+        return serieService.buscarSeriesPorNome(nome);
 
     }
 
