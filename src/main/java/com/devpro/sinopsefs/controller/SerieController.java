@@ -33,7 +33,8 @@ public class SerieController {
     }
 
     @DeleteMapping
-    public void deletarSerie(@RequestParam Long id) {
+    public void deletarSeriePorId(@RequestParam Long id) {
+        serieService.deletarSeriePorId(id);
 
     }
 }

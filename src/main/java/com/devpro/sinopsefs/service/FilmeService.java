@@ -38,4 +38,9 @@ public class FilmeService {
         }
         return null;
     }
+
+    public void deletarFilmePorId(Long id) {
+        filmeRepository.deleteById(id);
+
+    }
 }

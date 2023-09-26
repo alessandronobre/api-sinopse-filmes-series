@@ -30,7 +30,8 @@ public class FilmeController {
     }
 
     @DeleteMapping
-    public void deletarFilme(@RequestParam Long id) {
+    public void deletarFilmePorId(@RequestParam Long id) {
+        filmeService.deletarFilmePorId(id);
 
     }
 }

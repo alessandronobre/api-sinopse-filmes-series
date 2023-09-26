@@ -1,6 +1,5 @@
 package com.devpro.sinopsefs.repository;
 
-import com.devpro.sinopsefs.model.Filme;
 import com.devpro.sinopsefs.model.Serie;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
