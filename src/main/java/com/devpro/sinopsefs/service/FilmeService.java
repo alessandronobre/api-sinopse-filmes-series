@@ -1,6 +1,7 @@
 package com.devpro.sinopsefs.service;
 
 import com.devpro.sinopsefs.dto.MidiaDTO;
+import com.devpro.sinopsefs.exceptions.FilmeNotFoundException;
 import com.devpro.sinopsefs.model.Filme;
 import com.devpro.sinopsefs.repository.FilmeRepository;
 import lombok.AllArgsConstructor;
@@ -22,25 +23,25 @@ public class FilmeService {
     public List<MidiaDTO> buscarListaFilmes() {
         List<Filme> filmes = filmeRepository.findAll();
         List<MidiaDTO> midias = new ArrayList<>();
-        if (!filmes.isEmpty()) {
-            filmes.stream().forEach(filme -> midias.add(new MidiaDTO(filme)));
-            return midias;
+        if (filmes.isEmpty()) {
+            throw new FilmeNotFoundException();
         }
-        return null;
+        filmes.stream().forEach(filme -> midias.add(new MidiaDTO(filme)));
+        return midias;
     }
 
     public List<MidiaDTO> buscarFilmesPorNome(String nome) {
         List<Filme> filmes = filmeRepository.buscarFilmesPorNome(nome);
         List<MidiaDTO> midias = new ArrayList<>();
-        if (!filmes.isEmpty()) {
-            filmes.stream().forEach(filme -> midias.add(new MidiaDTO(filme)));
-            return midias;
+        if (filmes.isEmpty()) {
+            throw new FilmeNotFoundException(nome);
         }
-        return null;
+        filmes.stream().forEach(filme -> midias.add(new MidiaDTO(filme)));
+        return midias;
     }
 
     public void editarFilme(MidiaDTO midia) {
-        Filme filme = filmeRepository.findById(midia.getId()).orElseThrow(() -> new RuntimeException("Filme não encontrado"));
+        Filme filme = filmeRepository.findById(midia.getId()).orElseThrow(() -> new FilmeNotFoundException(midia.getId()));
         filme.setNome(midia.getNome());
         filme.setGenero(midia.getGenero());
         filme.setSinopse(midia.getSinopse());
@@ -48,7 +49,7 @@ public class FilmeService {
     }
 
     public void deletarFilmePorId(Long id) {
+        filmeRepository.findById(id).orElseThrow(() -> new FilmeNotFoundException(id));
         filmeRepository.deleteById(id);
-
     }
 }

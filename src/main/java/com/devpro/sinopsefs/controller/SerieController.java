@@ -23,14 +23,12 @@ public class SerieController {
     }
 
     @GetMapping
-    @ResponseBody
     public List<MidiaDTO> buscarListaSeries() {
         return serieService.buscarListaSeries();
 
     }
 
     @GetMapping("/nome")
-    @ResponseBody
     public List<MidiaDTO> buscarSeriePorNome(@RequestParam String nome) {
         return serieService.buscarSeriesPorNome(nome);
 
@@ -42,7 +40,6 @@ public class SerieController {
     }
 
     @DeleteMapping
-    @ResponseStatus(code = HttpStatus.NO_CONTENT)
     public void deletarSeriePorId(@RequestParam Long id) {
         serieService.deletarSeriePorId(id);
 

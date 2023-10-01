@@ -22,13 +22,11 @@ public class FilmeController {
     }
 
     @GetMapping
-    @ResponseBody
     public List<MidiaDTO> buscarListaFilmes() {
         return filmeService.buscarListaFilmes();
     }
 
     @GetMapping("/nome")
-    @ResponseBody
     public List<MidiaDTO> buscarFilmesPorNome(@RequestParam String nome) {
         return filmeService.buscarFilmesPorNome(nome);
     }
@@ -39,7 +37,6 @@ public class FilmeController {
     }
 
     @DeleteMapping
-    @ResponseStatus(code = HttpStatus.NO_CONTENT)
     public void deletarFilmePorId(@RequestParam Long id) {
         filmeService.deletarFilmePorId(id);
 

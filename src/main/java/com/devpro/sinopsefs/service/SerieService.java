@@ -1,6 +1,7 @@
 package com.devpro.sinopsefs.service;
 
 import com.devpro.sinopsefs.dto.MidiaDTO;
+import com.devpro.sinopsefs.exceptions.SerieNotFoundException;
 import com.devpro.sinopsefs.model.Serie;
 import com.devpro.sinopsefs.repository.SerieRepository;
 import lombok.AllArgsConstructor;
@@ -22,33 +23,34 @@ public class SerieService {
     public List<MidiaDTO> buscarListaSeries() {
         List<Serie> series = serieRepository.findAll();
         List<MidiaDTO> midias = new ArrayList<>();
-        if (!series.isEmpty()) {
-            series.stream().forEach(serie -> midias.add(new MidiaDTO(serie)));
-            return midias;
+        if (series.isEmpty()) {
+            throw new SerieNotFoundException();
         }
-        return null;
+        series.stream().forEach(serie -> midias.add(new MidiaDTO(serie)));
+        return midias;
     }
 
     public List<MidiaDTO> buscarSeriesPorNome(String nome) {
         List<Serie> series = serieRepository.buscarSeriesPorNome(nome);
         List<MidiaDTO> midias = new ArrayList<>();
-        if (!series.isEmpty()) {
-            series.stream().forEach(filme -> midias.add(new MidiaDTO(filme)));
-            return midias;
+        if (series.isEmpty()) {
+            throw new SerieNotFoundException(nome);
         }
-        return null;
-    }
-
-    public void deletarSeriePorId(Long id) {
-        serieRepository.deleteById(id);
-
+        series.stream().forEach(serie -> midias.add(new MidiaDTO(serie)));
+        return midias;
     }
 
     public void editarSerie(MidiaDTO midia) {
-        Serie serie = serieRepository.findById(midia.getId()).orElseThrow(() -> new RuntimeException("Serie não encontrado"));
+        Serie serie = serieRepository.findById(midia.getId()).orElseThrow(() -> new SerieNotFoundException(midia.getId()));
         serie.setNome(midia.getNome());
         serie.setGenero(midia.getGenero());
         serie.setSinopse(midia.getSinopse());
         serieRepository.save(serie);
+    }
+
+    public void deletarSeriePorId(Long id) {
+        serieRepository.findById(id).orElseThrow(() -> new SerieNotFoundException(id));
+        serieRepository.deleteById(id);
+
     }
 }
