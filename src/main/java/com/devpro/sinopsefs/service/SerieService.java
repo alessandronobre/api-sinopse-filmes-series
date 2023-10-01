@@ -16,8 +16,9 @@ public class SerieService {
 
     private final SerieRepository serieRepository;
 
-    public void salvarSerie(MidiaDTO serie) {
-        serieRepository.save(new Serie(serie));
+    public MidiaDTO salvarSerie(MidiaDTO midia) {
+        Serie serie = serieRepository.save(new Serie(midia));
+        return new MidiaDTO(serie);
     }
 
     public List<MidiaDTO> buscarListaSeries() {
@@ -40,12 +41,13 @@ public class SerieService {
         return midias;
     }
 
-    public void editarSerie(MidiaDTO midia) {
+    public MidiaDTO editarSerie(MidiaDTO midia) {
         Serie serie = serieRepository.findById(midia.getId()).orElseThrow(() -> new SerieNotFoundException(midia.getId()));
         serie.setNome(midia.getNome());
         serie.setGenero(midia.getGenero());
         serie.setSinopse(midia.getSinopse());
         serieRepository.save(serie);
+        return new MidiaDTO(serie);
     }
 
     public void deletarSeriePorId(Long id) {

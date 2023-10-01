@@ -16,8 +16,9 @@ public class FilmeService {
 
     private final FilmeRepository filmeRepository;
 
-    public void salvarFilme(MidiaDTO filme) {
-        filmeRepository.save(new Filme(filme));
+    public MidiaDTO salvarFilme(MidiaDTO midia) {
+        Filme filme = filmeRepository.save(new Filme(midia));
+        return new MidiaDTO(filme);
     }
 
     public List<MidiaDTO> buscarListaFilmes() {
@@ -40,12 +41,13 @@ public class FilmeService {
         return midias;
     }
 
-    public void editarFilme(MidiaDTO midia) {
+    public MidiaDTO editarFilme(MidiaDTO midia) {
         Filme filme = filmeRepository.findById(midia.getId()).orElseThrow(() -> new FilmeNotFoundException(midia.getId()));
         filme.setNome(midia.getNome());
         filme.setGenero(midia.getGenero());
         filme.setSinopse(midia.getSinopse());
         filmeRepository.save(filme);
+        return new MidiaDTO(filme);
     }
 
     public void deletarFilmePorId(Long id) {

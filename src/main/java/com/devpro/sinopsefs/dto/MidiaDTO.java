@@ -2,15 +2,17 @@ package com.devpro.sinopsefs.dto;
 
 import com.devpro.sinopsefs.enums.Genero;
 import com.devpro.sinopsefs.model.Filme;
+import com.devpro.sinopsefs.model.Midia;
 import com.devpro.sinopsefs.model.Serie;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.springframework.hateoas.RepresentationModel;
 
 import java.util.List;
 
 @AllArgsConstructor
 @Data
-public class MidiaDTO {
+public class MidiaDTO extends RepresentationModel<MidiaDTO> {
 
     private Long id;
     private String nome;

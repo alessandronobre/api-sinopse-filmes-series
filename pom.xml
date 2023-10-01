@@ -12,7 +12,7 @@
 	<artifactId>api-sinopse-filmes-series</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>sinopsefs</name>
-	<description>Api rest de sinopses de filmes e series</description>
+	<description>Api RestFull de sinopses de filmes e series</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>
@@ -46,6 +46,10 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-hateoas</artifactId>
 		</dependency>
 	</dependencies>
 

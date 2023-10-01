@@ -3,10 +3,15 @@ package com.devpro.sinopsefs.controller;
 import com.devpro.sinopsefs.dto.MidiaDTO;
 import com.devpro.sinopsefs.service.SerieService;
 import lombok.AllArgsConstructor;
+import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @AllArgsConstructor
 @RestController
@@ -17,31 +22,85 @@ public class SerieController {
 
     @PostMapping("/cadastrar")
     @ResponseStatus(code = HttpStatus.CREATED)
-    public void cadastarSerie(@RequestBody MidiaDTO serie) {
-        serieService.salvarSerie(serie);
+    public MidiaDTO cadastarSerie(@RequestBody MidiaDTO midia) {
+        MidiaDTO serie = serieService.salvarSerie(midia);
+        Link editarLink = linkTo(methodOn(SerieController.class)
+                .editarSerie(null))
+                .withSelfRel()
+                .withType("PUT");
 
+        Link deletarLink = linkTo(methodOn(SerieController.class)
+                .deletarSeriePorId(serie.getId()))
+                .withSelfRel()
+                .withType("DELETE");
+
+        serie.add(editarLink, deletarLink);
+        return serie;
     }
 
     @GetMapping
     public List<MidiaDTO> buscarListaSeries() {
-        return serieService.buscarListaSeries();
+        List<MidiaDTO> midias = serieService.buscarListaSeries();
+        midias.forEach(midia -> {
+            Link selfLink = linkTo(methodOn(SerieController.class)
+                    .buscarSeriePorNome(midia.getNome()))
+                    .withSelfRel()
+                    .withType("GET");
 
+            Link editarLink = linkTo(methodOn(SerieController.class)
+                    .editarSerie(null))
+                    .withSelfRel()
+                    .withType("PUT");
+
+            Link deletarLink = linkTo(methodOn(SerieController.class)
+                    .deletarSeriePorId(midia.getId()))
+                    .withSelfRel()
+                    .withType("DELETE");
+
+            midia.add(selfLink, editarLink, deletarLink);
+        });
+        return midias;
     }
 
     @GetMapping("/nome")
     public List<MidiaDTO> buscarSeriePorNome(@RequestParam String nome) {
-        return serieService.buscarSeriesPorNome(nome);
+        List<MidiaDTO> midias = serieService.buscarSeriesPorNome(nome);
+        midias.forEach(midia -> {
+            Link editarLink = linkTo(methodOn(SerieController.class)
+                    .editarSerie(null))
+                    .withSelfRel()
+                    .withType("PUT");
 
+            Link deletarLink = linkTo(methodOn(SerieController.class)
+                    .deletarSeriePorId(midia.getId()))
+                    .withSelfRel()
+                    .withType("DELETE");
+
+            midia.add(editarLink, deletarLink);
+        });
+        return midias;
     }
 
     @PutMapping("/editar")
-    public void editarSerie(@RequestBody MidiaDTO filme) {
-        serieService.editarSerie(filme);
+    public MidiaDTO editarSerie(@RequestBody MidiaDTO midia) {
+        MidiaDTO serie = serieService.editarSerie(midia);
+        Link selfLink = linkTo(methodOn(SerieController.class)
+                .buscarSeriePorNome(serie.getNome()))
+                .withSelfRel()
+                .withType("GET");
+
+        Link deletarLink = linkTo(methodOn(SerieController.class)
+                .deletarSeriePorId(serie.getId()))
+                .withSelfRel()
+                .withType("DELETE");
+
+        serie.add(selfLink, deletarLink);
+        return serie;
     }
 
     @DeleteMapping("/deletar")
-    public void deletarSeriePorId(@RequestParam Long id) {
+    public ResponseEntity<?> deletarSeriePorId(@RequestParam Long id) {
         serieService.deletarSeriePorId(id);
-
+        return ResponseEntity.noContent().build();
     }
 }

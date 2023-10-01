@@ -12,7 +12,7 @@ import java.util.List;
 @Data
 @Entity
 @Table
-public class Filme extends Midia{
+public class Filme extends Midia {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
