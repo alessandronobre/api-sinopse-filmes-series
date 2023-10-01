@@ -1,17 +1,14 @@
 package com.devpro.sinopsefs.controller;
 
 import com.devpro.sinopsefs.dto.MidiaDTO;
+import com.devpro.sinopsefs.hateoas.SerieAssembler;
 import com.devpro.sinopsefs.service.SerieService;
 import lombok.AllArgsConstructor;
-import org.springframework.hateoas.Link;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @AllArgsConstructor
 @RestController
@@ -19,83 +16,26 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 public class SerieController {
 
     private final SerieService serieService;
-
+    private final SerieAssembler serieAssembler;
     @PostMapping("/cadastrar")
     @ResponseStatus(code = HttpStatus.CREATED)
-    public MidiaDTO cadastarSerie(@RequestBody MidiaDTO midia) {
-        MidiaDTO serie = serieService.salvarSerie(midia);
-        Link editarLink = linkTo(methodOn(SerieController.class)
-                .editarSerie(null))
-                .withSelfRel()
-                .withType("PUT");
-
-        Link deletarLink = linkTo(methodOn(SerieController.class)
-                .deletarSeriePorId(serie.getId()))
-                .withSelfRel()
-                .withType("DELETE");
-
-        serie.add(editarLink, deletarLink);
-        return serie;
+    public EntityModel<MidiaDTO> cadastarSerie(@RequestBody MidiaDTO midia) {
+        return serieAssembler.toModel(serieService.salvarSerie(midia));
     }
 
-    @GetMapping
-    public List<MidiaDTO> buscarListaSeries() {
-        List<MidiaDTO> midias = serieService.buscarListaSeries();
-        midias.forEach(midia -> {
-            Link selfLink = linkTo(methodOn(SerieController.class)
-                    .buscarSeriePorNome(midia.getNome()))
-                    .withSelfRel()
-                    .withType("GET");
-
-            Link editarLink = linkTo(methodOn(SerieController.class)
-                    .editarSerie(null))
-                    .withSelfRel()
-                    .withType("PUT");
-
-            Link deletarLink = linkTo(methodOn(SerieController.class)
-                    .deletarSeriePorId(midia.getId()))
-                    .withSelfRel()
-                    .withType("DELETE");
-
-            midia.add(selfLink, editarLink, deletarLink);
-        });
-        return midias;
+    @GetMapping("/buscar/series")
+    public CollectionModel<EntityModel<MidiaDTO>> buscarListaSeries() {
+        return serieAssembler.toCollectionModel(serieService.buscarListaSeries());
     }
 
     @GetMapping("/nome")
-    public List<MidiaDTO> buscarSeriePorNome(@RequestParam String nome) {
-        List<MidiaDTO> midias = serieService.buscarSeriesPorNome(nome);
-        midias.forEach(midia -> {
-            Link editarLink = linkTo(methodOn(SerieController.class)
-                    .editarSerie(null))
-                    .withSelfRel()
-                    .withType("PUT");
-
-            Link deletarLink = linkTo(methodOn(SerieController.class)
-                    .deletarSeriePorId(midia.getId()))
-                    .withSelfRel()
-                    .withType("DELETE");
-
-            midia.add(editarLink, deletarLink);
-        });
-        return midias;
+    public CollectionModel<EntityModel<MidiaDTO>> buscarSeriePorNome(@RequestParam String nome) {
+        return serieAssembler.toCollectionModel(serieService.buscarSeriesPorNome(nome));
     }
 
     @PutMapping("/editar")
-    public MidiaDTO editarSerie(@RequestBody MidiaDTO midia) {
-        MidiaDTO serie = serieService.editarSerie(midia);
-        Link selfLink = linkTo(methodOn(SerieController.class)
-                .buscarSeriePorNome(serie.getNome()))
-                .withSelfRel()
-                .withType("GET");
-
-        Link deletarLink = linkTo(methodOn(SerieController.class)
-                .deletarSeriePorId(serie.getId()))
-                .withSelfRel()
-                .withType("DELETE");
-
-        serie.add(selfLink, deletarLink);
-        return serie;
+    public EntityModel<MidiaDTO> editarSerie(@RequestBody MidiaDTO midia) {
+        return serieAssembler.toModel(serieService.editarSerie(midia));
     }
 
     @DeleteMapping("/deletar")
