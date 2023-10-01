@@ -2,8 +2,6 @@ package com.devpro.sinopsefs.hateoas;
 
 import com.devpro.sinopsefs.controller.SerieController;
 import com.devpro.sinopsefs.dto.MidiaDTO;
-import com.devpro.sinopsefs.model.Filme;
-import com.devpro.sinopsefs.model.Midia;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.Link;
