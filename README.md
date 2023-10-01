@@ -1,2 +1,2 @@
 # api-sinopse-filmes-series
-Api rest de sinopses de filmes e series
+Api RestFull de sinopses de filmes e series
