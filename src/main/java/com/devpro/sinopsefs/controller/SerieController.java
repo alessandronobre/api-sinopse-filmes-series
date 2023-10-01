@@ -15,7 +15,7 @@ public class SerieController {
 
     private final SerieService serieService;
 
-    @PostMapping
+    @PostMapping("/cadastrar")
     @ResponseStatus(code = HttpStatus.CREATED)
     public void cadastarSerie(@RequestBody MidiaDTO serie) {
         serieService.salvarSerie(serie);
@@ -34,12 +34,12 @@ public class SerieController {
 
     }
 
-    @PutMapping
+    @PutMapping("/editar")
     public void editarSerie(@RequestBody MidiaDTO filme) {
         serieService.editarSerie(filme);
     }
 
-    @DeleteMapping
+    @DeleteMapping("/deletar")
     public void deletarSeriePorId(@RequestParam Long id) {
         serieService.deletarSeriePorId(id);
 

@@ -15,7 +15,7 @@ public class FilmeController {
 
     private final FilmeService filmeService;
 
-    @PostMapping
+    @PostMapping("/cadastrar")
     @ResponseStatus(code = HttpStatus.CREATED)
     public void cadastarFilme(@RequestBody MidiaDTO filme) {
         filmeService.salvarFilme(filme);
@@ -31,12 +31,12 @@ public class FilmeController {
         return filmeService.buscarFilmesPorNome(nome);
     }
 
-    @PutMapping
+    @PutMapping("/editar")
     public void editarFilme(@RequestBody MidiaDTO filme) {
         filmeService.editarFilme(filme);
     }
 
-    @DeleteMapping
+    @DeleteMapping("/deletar")
     public void deletarFilmePorId(@RequestParam Long id) {
         filmeService.deletarFilmePorId(id);
 
