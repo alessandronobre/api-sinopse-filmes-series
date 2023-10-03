@@ -17,12 +17,12 @@ public class RaizController {
     public RaizModel raiz() {
         RaizModel raiz = new RaizModel();
         Link filmesLink = linkTo(methodOn(FilmeController.class)
-                .buscarListaFilmes())
+                .buscarListaFilmes(null))
                 .withRel("filmes")
                 .withType("GET");
 
         Link seriesLink = linkTo(methodOn(SerieController.class)
-                .buscarListaSeries())
+                .buscarListaSeries(null))
                 .withRel("series")
                 .withType("GET");
 

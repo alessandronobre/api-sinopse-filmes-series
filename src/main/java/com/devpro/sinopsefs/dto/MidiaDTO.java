@@ -5,11 +5,13 @@ import com.devpro.sinopsefs.model.Filme;
 import com.devpro.sinopsefs.model.Serie;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.hateoas.RepresentationModel;
 
 import java.util.List;
 
 @AllArgsConstructor
+@NoArgsConstructor
 @Data
 public class MidiaDTO extends RepresentationModel<MidiaDTO> {
 

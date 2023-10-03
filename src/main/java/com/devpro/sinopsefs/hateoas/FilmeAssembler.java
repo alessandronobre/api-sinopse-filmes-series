@@ -18,7 +18,7 @@ public class FilmeAssembler implements SimpleRepresentationModelAssembler<MidiaD
     public void addLinks(EntityModel<MidiaDTO> resource) {
         MidiaDTO midia = resource.getContent();
         Link selfLink = linkTo(methodOn(FilmeController.class)
-                .buscarFilmesPorNome(midia.getNome()))
+                .buscarFilmesPorNome(midia.getNome(), null))
                 .withSelfRel()
                 .withType("GET");
 
@@ -43,7 +43,7 @@ public class FilmeAssembler implements SimpleRepresentationModelAssembler<MidiaD
                 .withType("POST");
 
         Link selfLink = linkTo(methodOn(FilmeController.class)
-                .buscarListaFilmes())
+                .buscarListaFilmes(null))
                 .withSelfRel()
                 .withType("GET");
 

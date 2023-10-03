@@ -5,10 +5,9 @@ import com.devpro.sinopsefs.exceptions.FilmeNotFoundException;
 import com.devpro.sinopsefs.model.Filme;
 import com.devpro.sinopsefs.repository.FilmeRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @AllArgsConstructor
 @Service
@@ -21,23 +20,35 @@ public class FilmeService {
         return new MidiaDTO(filme);
     }
 
-    public List<MidiaDTO> buscarListaFilmes() {
-        List<Filme> filmes = filmeRepository.findAll();
-        List<MidiaDTO> midias = new ArrayList<>();
+    public Page<MidiaDTO> buscarListaFilmes(Pageable pageable) {
+        Page<Filme> filmes = filmeRepository.findAll(pageable);
         if (filmes.isEmpty()) {
             throw new FilmeNotFoundException();
         }
-        filmes.stream().forEach(filme -> midias.add(new MidiaDTO(filme)));
+        Page<MidiaDTO> midias = filmes.map(filme -> {
+            MidiaDTO midia = new MidiaDTO();
+            midia.setId(filme.getId());
+            midia.setNome(filme.getNome());
+            midia.setSinopse(filme.getSinopse());
+            midia.setGenero(filme.getGenero());
+            return midia;
+        });
         return midias;
     }
 
-    public List<MidiaDTO> buscarFilmesPorNome(String nome) {
-        List<Filme> filmes = filmeRepository.buscarFilmesPorNome(nome);
-        List<MidiaDTO> midias = new ArrayList<>();
+    public Page<MidiaDTO> buscarFilmesPorNome(String nome, Pageable pageable) {
+        Page<Filme> filmes = filmeRepository.buscarFilmesPorNome(nome, pageable);
         if (filmes.isEmpty()) {
             throw new FilmeNotFoundException(nome);
         }
-        filmes.stream().forEach(filme -> midias.add(new MidiaDTO(filme)));
+        Page<MidiaDTO> midias = filmes.map(filme -> {
+            MidiaDTO midia = new MidiaDTO();
+            midia.setId(filme.getId());
+            midia.setNome(filme.getNome());
+            midia.setSinopse(filme.getSinopse());
+            midia.setGenero(filme.getGenero());
+            return midia;
+        });
         return midias;
     }
 

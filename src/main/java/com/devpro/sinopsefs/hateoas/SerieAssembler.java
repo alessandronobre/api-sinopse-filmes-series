@@ -18,7 +18,7 @@ public class SerieAssembler implements SimpleRepresentationModelAssembler<MidiaD
     public void addLinks(EntityModel<MidiaDTO> resource) {
         MidiaDTO midia = resource.getContent();
         Link selfLink = linkTo(methodOn(SerieController.class)
-                .buscarSeriePorNome(midia.getNome()))
+                .buscarSeriePorNome(midia.getNome(), null))
                 .withSelfRel()
                 .withType("GET");
 
@@ -43,7 +43,7 @@ public class SerieAssembler implements SimpleRepresentationModelAssembler<MidiaD
                 .withType("POST");
 
         Link selfLink = linkTo(methodOn(SerieController.class)
-                .buscarListaSeries())
+                .buscarListaSeries(null))
                 .withSelfRel()
                 .withType("GET");
 

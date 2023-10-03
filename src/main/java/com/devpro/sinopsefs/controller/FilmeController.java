@@ -3,13 +3,15 @@ package com.devpro.sinopsefs.controller;
 import com.devpro.sinopsefs.dto.MidiaDTO;
 import com.devpro.sinopsefs.hateoas.FilmeAssembler;
 import com.devpro.sinopsefs.service.FilmeService;
-import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @AllArgsConstructor
@@ -19,6 +21,7 @@ public class FilmeController {
 
     private final FilmeService filmeService;
     private final FilmeAssembler filmeAssembler;
+    private PagedResourcesAssembler<MidiaDTO> pagedResourcesAssembler;
 
     @PostMapping("/cadastrar")
     @ResponseStatus(code = HttpStatus.CREATED)
@@ -27,13 +30,16 @@ public class FilmeController {
     }
 
     @GetMapping("/buscar/filmes")
-    public CollectionModel<EntityModel<MidiaDTO>> buscarListaFilmes() {
-        return filmeAssembler.toCollectionModel(filmeService.buscarListaFilmes());
+    public CollectionModel<EntityModel<MidiaDTO>> buscarListaFilmes(@PageableDefault(size=5) Pageable pageable) {
+        Page<MidiaDTO> midias = filmeService.buscarListaFilmes(pageable);
+        return pagedResourcesAssembler.toModel(midias, filmeAssembler);
     }
 
     @GetMapping("/nome")
-    public CollectionModel<EntityModel<MidiaDTO>> buscarFilmesPorNome(@RequestParam String nome) {
-        return filmeAssembler.toCollectionModel(filmeService.buscarFilmesPorNome(nome));
+    public CollectionModel<EntityModel<MidiaDTO>> buscarFilmesPorNome(@RequestParam String nome,
+                                                                      @PageableDefault(size=5) Pageable pageable) {
+        Page<MidiaDTO> midias = filmeService.buscarFilmesPorNome(nome, pageable);
+        return pagedResourcesAssembler.toModel(midias, filmeAssembler);
     }
 
     @PutMapping("/editar")

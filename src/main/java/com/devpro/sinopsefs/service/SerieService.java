@@ -5,10 +5,9 @@ import com.devpro.sinopsefs.exceptions.SerieNotFoundException;
 import com.devpro.sinopsefs.model.Serie;
 import com.devpro.sinopsefs.repository.SerieRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @AllArgsConstructor
 @Service
@@ -21,23 +20,35 @@ public class SerieService {
         return new MidiaDTO(serie);
     }
 
-    public List<MidiaDTO> buscarListaSeries() {
-        List<Serie> series = serieRepository.findAll();
-        List<MidiaDTO> midias = new ArrayList<>();
+    public Page<MidiaDTO> buscarListaSeries(Pageable pageable) {
+        Page<Serie> series = serieRepository.findAll(pageable);
         if (series.isEmpty()) {
             throw new SerieNotFoundException();
         }
-        series.stream().forEach(serie -> midias.add(new MidiaDTO(serie)));
+        Page<MidiaDTO> midias = series.map(serie -> {
+            MidiaDTO midia = new MidiaDTO();
+            midia.setId(serie.getId());
+            midia.setNome(serie.getNome());
+            midia.setSinopse(serie.getSinopse());
+            midia.setGenero(serie.getGenero());
+            return midia;
+        });
         return midias;
     }
 
-    public List<MidiaDTO> buscarSeriesPorNome(String nome) {
-        List<Serie> series = serieRepository.buscarSeriesPorNome(nome);
-        List<MidiaDTO> midias = new ArrayList<>();
+    public Page<MidiaDTO> buscarSeriesPorNome(String nome, Pageable pageable) {
+        Page<Serie> series = serieRepository.buscarSeriesPorNome(nome, pageable);
         if (series.isEmpty()) {
             throw new SerieNotFoundException(nome);
         }
-        series.stream().forEach(serie -> midias.add(new MidiaDTO(serie)));
+        Page<MidiaDTO> midias = series.map(serie -> {
+            MidiaDTO midia = new MidiaDTO();
+            midia.setId(serie.getId());
+            midia.setNome(serie.getNome());
+            midia.setSinopse(serie.getSinopse());
+            midia.setGenero(serie.getGenero());
+            return midia;
+        });
         return midias;
     }
 

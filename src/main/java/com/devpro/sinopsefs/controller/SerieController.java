@@ -4,6 +4,10 @@ import com.devpro.sinopsefs.dto.MidiaDTO;
 import com.devpro.sinopsefs.hateoas.SerieAssembler;
 import com.devpro.sinopsefs.service.SerieService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
@@ -17,6 +21,8 @@ public class SerieController {
 
     private final SerieService serieService;
     private final SerieAssembler serieAssembler;
+    private PagedResourcesAssembler<MidiaDTO> pagedResourcesAssembler;
+
     @PostMapping("/cadastrar")
     @ResponseStatus(code = HttpStatus.CREATED)
     public EntityModel<MidiaDTO> cadastarSerie(@RequestBody MidiaDTO midia) {
@@ -24,13 +30,16 @@ public class SerieController {
     }
 
     @GetMapping("/buscar/series")
-    public CollectionModel<EntityModel<MidiaDTO>> buscarListaSeries() {
-        return serieAssembler.toCollectionModel(serieService.buscarListaSeries());
+    public CollectionModel<EntityModel<MidiaDTO>> buscarListaSeries(@PageableDefault(size=5) Pageable pageable) {
+        Page<MidiaDTO> midias = serieService.buscarListaSeries(pageable);
+        return pagedResourcesAssembler.toModel(midias, serieAssembler);
     }
 
     @GetMapping("/nome")
-    public CollectionModel<EntityModel<MidiaDTO>> buscarSeriePorNome(@RequestParam String nome) {
-        return serieAssembler.toCollectionModel(serieService.buscarSeriesPorNome(nome));
+    public CollectionModel<EntityModel<MidiaDTO>> buscarSeriePorNome(@RequestParam String nome,
+                                                                     @PageableDefault(size=5) Pageable pageable) {
+        Page<MidiaDTO> midias = serieService.buscarSeriesPorNome(nome, pageable);
+        return pagedResourcesAssembler.toModel(midias, serieAssembler);
     }
 
     @PutMapping("/editar")
