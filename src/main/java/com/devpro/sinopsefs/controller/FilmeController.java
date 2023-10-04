@@ -3,6 +3,7 @@ package com.devpro.sinopsefs.controller;
 import com.devpro.sinopsefs.dto.MidiaDTO;
 import com.devpro.sinopsefs.hateoas.FilmeAssembler;
 import com.devpro.sinopsefs.service.FilmeService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,7 +26,7 @@ public class FilmeController {
 
     @PostMapping("/cadastrar")
     @ResponseStatus(code = HttpStatus.CREATED)
-    public EntityModel<MidiaDTO> cadastarFilme(@RequestBody MidiaDTO midia) {
+    public EntityModel<MidiaDTO> cadastarFilme(@RequestBody @Valid MidiaDTO midia) {
         return filmeAssembler.toModel(filmeService.salvarFilme(midia));
     }
 
@@ -43,7 +44,7 @@ public class FilmeController {
     }
 
     @PutMapping("/editar")
-    public EntityModel<MidiaDTO> editarFilme(@RequestBody MidiaDTO midia) {
+    public EntityModel<MidiaDTO> editarFilme(@RequestBody @Valid MidiaDTO midia) {
         return filmeAssembler.toModel(filmeService.editarFilme(midia));
     }
 

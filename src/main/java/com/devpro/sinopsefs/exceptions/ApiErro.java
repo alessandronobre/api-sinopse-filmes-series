@@ -14,5 +14,5 @@ public class ApiErro {
     private int erro;
     private String status;
     private String mensagem;
-    private LocalDateTime timeStamp;
+    private LocalDateTime timestamp;
 }

@@ -3,6 +3,7 @@ package com.devpro.sinopsefs.controller;
 import com.devpro.sinopsefs.dto.MidiaDTO;
 import com.devpro.sinopsefs.hateoas.SerieAssembler;
 import com.devpro.sinopsefs.service.SerieService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,7 +26,7 @@ public class SerieController {
 
     @PostMapping("/cadastrar")
     @ResponseStatus(code = HttpStatus.CREATED)
-    public EntityModel<MidiaDTO> cadastarSerie(@RequestBody MidiaDTO midia) {
+    public EntityModel<MidiaDTO> cadastarSerie(@RequestBody @Valid MidiaDTO midia) {
         return serieAssembler.toModel(serieService.salvarSerie(midia));
     }
 
@@ -43,7 +44,7 @@ public class SerieController {
     }
 
     @PutMapping("/editar")
-    public EntityModel<MidiaDTO> editarSerie(@RequestBody MidiaDTO midia) {
+    public EntityModel<MidiaDTO> editarSerie(@RequestBody @Valid MidiaDTO midia) {
         return serieAssembler.toModel(serieService.editarSerie(midia));
     }
 

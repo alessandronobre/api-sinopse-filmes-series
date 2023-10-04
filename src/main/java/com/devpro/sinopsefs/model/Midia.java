@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @MappedSuperclass
 public abstract class Midia {
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String nome;
 
     @Column(nullable = false)
