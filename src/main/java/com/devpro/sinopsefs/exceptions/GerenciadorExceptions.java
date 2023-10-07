@@ -19,8 +19,21 @@ import java.util.List;
 @ControllerAdvice(annotations = RestController.class)
 public class GerenciadorExceptions extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<ApiErro> handlerEntityNotFoundException(EntityNotFoundException exception){
+    @ExceptionHandler(MidiaExistingException.class)
+    public ResponseEntity<ApiErro> handlerMidiaExistingException(MidiaExistingException exception){
+        HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
+
+        ApiErro apiErro = new ApiErro(
+                httpStatus.value(),
+                httpStatus.getReasonPhrase(),
+                exception.getLocalizedMessage(),
+                LocalDateTime.now());
+
+        return new ResponseEntity<>(apiErro, httpStatus);
+    }
+
+    @ExceptionHandler(MidiaNotFoundException.class)
+    public ResponseEntity<ApiErro> handlerMidiaNotFoundException(MidiaNotFoundException exception){
         HttpStatus httpStatus = HttpStatus.NOT_FOUND;
 
         ApiErro apiErro = new ApiErro(

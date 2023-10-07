@@ -1,7 +1,8 @@
 package com.devpro.sinopsefs.service;
 
 import com.devpro.sinopsefs.dto.MidiaDTO;
-import com.devpro.sinopsefs.exceptions.SerieNotFoundException;
+import com.devpro.sinopsefs.exceptions.MidiaExistingException;
+import com.devpro.sinopsefs.exceptions.MidiaNotFoundException;
 import com.devpro.sinopsefs.model.Serie;
 import com.devpro.sinopsefs.repository.SerieRepository;
 import lombok.AllArgsConstructor;
@@ -15,7 +16,12 @@ public class SerieService {
 
     private final SerieRepository serieRepository;
 
+    private static final String SERIE = "Serie";
+
     public MidiaDTO salvarSerie(MidiaDTO midia) {
+        if (!serieRepository.buscarSeriesPorNome(midia.getNome(), null).isEmpty()) {
+            throw new MidiaExistingException(SERIE, midia.getNome());
+        }
         Serie serie = serieRepository.save(new Serie(midia));
         return new MidiaDTO(serie);
     }
@@ -23,7 +29,7 @@ public class SerieService {
     public Page<MidiaDTO> buscarListaSeries(Pageable pageable) {
         Page<Serie> series = serieRepository.findAll(pageable);
         if (series.isEmpty()) {
-            throw new SerieNotFoundException();
+            throw new MidiaNotFoundException(SERIE);
         }
         Page<MidiaDTO> midias = series.map(serie -> {
             MidiaDTO midia = new MidiaDTO();
@@ -39,7 +45,7 @@ public class SerieService {
     public Page<MidiaDTO> buscarSeriesPorNome(String nome, Pageable pageable) {
         Page<Serie> series = serieRepository.buscarSeriesPorNome(nome, pageable);
         if (series.isEmpty()) {
-            throw new SerieNotFoundException(nome);
+            throw new MidiaNotFoundException(SERIE, nome);
         }
         Page<MidiaDTO> midias = series.map(serie -> {
             MidiaDTO midia = new MidiaDTO();
@@ -53,7 +59,7 @@ public class SerieService {
     }
 
     public MidiaDTO editarSerie(MidiaDTO midia) {
-        Serie serie = serieRepository.findById(midia.getId()).orElseThrow(() -> new SerieNotFoundException(midia.getId()));
+        Serie serie = serieRepository.findById(midia.getId()).orElseThrow(() -> new MidiaNotFoundException(SERIE, midia.getId()));
         serie.setNome(midia.getNome());
         serie.setGenero(midia.getGenero());
         serie.setSinopse(midia.getSinopse());
@@ -62,7 +68,7 @@ public class SerieService {
     }
 
     public void deletarSeriePorId(Long id) {
-        serieRepository.findById(id).orElseThrow(() -> new SerieNotFoundException(id));
+        serieRepository.findById(id).orElseThrow(() -> new MidiaNotFoundException(SERIE, id));
         serieRepository.deleteById(id);
 
     }
