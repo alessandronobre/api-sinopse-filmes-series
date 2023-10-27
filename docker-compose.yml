@@ -1,0 +1,26 @@
+version: "3.9"
+services:
+  sinopsefs:
+    image: sinopsefs-api-0.0.1
+    container_name: "sinopsefs-api-0.0.1"
+    ports:
+      - "8080:8080"
+    networks:
+      - rede-sinopsefs-api
+    depends_on:
+      - data_base
+
+  data_base:
+    image: postgres
+    container_name: "banco-container"
+    environment:
+      POSTGRES_PASSWORD: "admin"
+      POSTGRES_DB: "sinopsefs"
+    ports:
+      - "5432:5432"
+    networks:
+      - rede-sinopsefs-api
+
+networks:
+  rede-sinopsefs-api:
+        driver: bridge
