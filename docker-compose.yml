@@ -3,6 +3,11 @@ services:
   sinopsefs:
     image: sinopsefs-api-0.0.1
     container_name: "sinopsefs-api-0.0.1"
+    environment:
+      DB_URL: jdbc:postgresql://data_base:5432/sinopsefs
+      DB_USER: postgres
+      DB_PASSWORD: sinopsefs_admin
+      TOKEN_SECRET: 2000
     ports:
       - "8080:8080"
     networks:
@@ -14,7 +19,7 @@ services:
     image: postgres
     container_name: "banco-container"
     environment:
-      POSTGRES_PASSWORD: "admin"
+      POSTGRES_PASSWORD: "sinopsefs_admin"
       POSTGRES_DB: "sinopsefs"
     ports:
       - "5432:5432"
