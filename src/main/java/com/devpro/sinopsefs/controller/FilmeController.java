@@ -49,7 +49,7 @@ public class FilmeController {
     }
 
     @DeleteMapping("/deletar")
-    public ResponseEntity<?> deletarFilmePorId(@RequestParam Long id) {
+    public ResponseEntity deletarFilmePorId(@RequestParam Long id) {
         filmeService.deletarFilmePorId(id);
         return ResponseEntity.noContent().build();
     }

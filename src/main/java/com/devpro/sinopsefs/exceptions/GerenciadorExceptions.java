@@ -1,6 +1,5 @@
 package com.devpro.sinopsefs.exceptions;
 
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -19,8 +18,8 @@ import java.util.List;
 @ControllerAdvice(annotations = RestController.class)
 public class GerenciadorExceptions extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(MidiaExistingException.class)
-    public ResponseEntity<ApiErro> handlerMidiaExistingException(MidiaExistingException exception){
+    @ExceptionHandler(ItemExistenteException.class)
+    public ResponseEntity<ApiErro> handlerMidiaExistingException(ItemExistenteException exception){
         HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
 
         ApiErro apiErro = new ApiErro(
@@ -32,8 +31,8 @@ public class GerenciadorExceptions extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(apiErro, httpStatus);
     }
 
-    @ExceptionHandler(MidiaNotFoundException.class)
-    public ResponseEntity<ApiErro> handlerMidiaNotFoundException(MidiaNotFoundException exception){
+    @ExceptionHandler(ItemNotFoundException.class)
+    public ResponseEntity<ApiErro> handlerMidiaNotFoundException(ItemNotFoundException exception){
         HttpStatus httpStatus = HttpStatus.NOT_FOUND;
 
         ApiErro apiErro = new ApiErro(

@@ -49,7 +49,7 @@ public class SerieController {
     }
 
     @DeleteMapping("/deletar")
-    public ResponseEntity<?> deletarSeriePorId(@RequestParam Long id) {
+    public ResponseEntity deletarSeriePorId(@RequestParam Long id) {
         serieService.deletarSeriePorId(id);
         return ResponseEntity.noContent().build();
     }
