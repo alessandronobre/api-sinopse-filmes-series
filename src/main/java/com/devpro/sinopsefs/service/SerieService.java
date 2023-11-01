@@ -26,7 +26,7 @@ public class SerieService {
             throw new ItemExistenteException(SERIE, midia.getNome());
         }
         Serie serie = serieRepository.save(new Serie(midia));
-        return new MidiaDTO(serie);
+        return midiaMapper.converteSerieEntidadeParaDto(serie);
     }
 
     public Page<MidiaDTO> buscarListaSeries(Pageable pageable) {
@@ -53,7 +53,7 @@ public class SerieService {
         serie.setGenero(midia.getGenero());
         serie.setSinopse(midia.getSinopse());
         serieRepository.save(serie);
-        return new MidiaDTO(serie);
+        return midiaMapper.converteSerieEntidadeParaDto(serie);
     }
 
     public void deletarSeriePorId(Long id) {

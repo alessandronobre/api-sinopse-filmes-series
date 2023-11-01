@@ -26,7 +26,7 @@ public class FilmeService {
             throw new ItemExistenteException(FILME, midia.getNome());
         }
         Filme filme = filmeRepository.save(new Filme(midia));
-        return new MidiaDTO(filme);
+        return midiaMapper.converteFilmeEntidadeParaDto(filme);
     }
 
     public Page<MidiaDTO> buscarListaFilmes(Pageable pageable) {
@@ -53,7 +53,7 @@ public class FilmeService {
         filme.setGenero(midia.getGenero());
         filme.setSinopse(midia.getSinopse());
         filmeRepository.save(filme);
-        return new MidiaDTO(filme);
+        return midiaMapper.converteFilmeEntidadeParaDto(filme);
     }
 
     public void deletarFilmePorId(Long id) {
