@@ -2,6 +2,7 @@ package com.devpro.sinopsefs.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -14,6 +15,7 @@ import java.util.List;
 @Data
 @Entity
 @Table
+@AllArgsConstructor
 @NoArgsConstructor
 public class Usuario implements UserDetails {
 
