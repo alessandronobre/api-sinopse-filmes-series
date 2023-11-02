@@ -25,8 +25,8 @@ public class FilmeService {
         if (!filmeRepository.buscarFilmesPorNome(midia.getNome(), null).isEmpty()) {
             throw new ItemExistenteException(FILME, midia.getNome());
         }
-        Filme filme = filmeRepository.save(new Filme(midia));
-        return midiaMapper.converteFilmeEntidadeParaDto(filme);
+        Filme filme = filmeRepository.save(midiaMapper.converteMidiaDtoParaFilmeEntidade(midia));
+        return midiaMapper.converteFilmeEntidadeParaMidiaDto(filme);
     }
 
     public Page<MidiaDTO> buscarListaFilmes(Pageable pageable) {
@@ -34,7 +34,7 @@ public class FilmeService {
         if (filmes.isEmpty()) {
             throw new ItemNotFoundException(FILME);
         }
-        Page<MidiaDTO> midias = filmes.map(filme -> midiaMapper.converteFilmeEntidadeParaDto(filme));
+        Page<MidiaDTO> midias = filmes.map(filme -> midiaMapper.converteFilmeEntidadeParaMidiaDto(filme));
         return midias;
     }
 
@@ -43,7 +43,7 @@ public class FilmeService {
         if (filmes.isEmpty()) {
             throw new ItemNotFoundException(FILME, nome);
         }
-        Page<MidiaDTO> midias = filmes.map(filme -> midiaMapper.converteFilmeEntidadeParaDto(filme));
+        Page<MidiaDTO> midias = filmes.map(filme -> midiaMapper.converteFilmeEntidadeParaMidiaDto(filme));
         return midias;
     }
 
@@ -53,7 +53,7 @@ public class FilmeService {
         filme.setGenero(midia.getGenero());
         filme.setSinopse(midia.getSinopse());
         filmeRepository.save(filme);
-        return midiaMapper.converteFilmeEntidadeParaDto(filme);
+        return midiaMapper.converteFilmeEntidadeParaMidiaDto(filme);
     }
 
     public void deletarFilmePorId(Long id) {

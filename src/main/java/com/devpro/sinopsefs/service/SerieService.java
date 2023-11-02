@@ -25,8 +25,8 @@ public class SerieService {
         if (!serieRepository.buscarSeriesPorNome(midia.getNome(), null).isEmpty()) {
             throw new ItemExistenteException(SERIE, midia.getNome());
         }
-        Serie serie = serieRepository.save(new Serie(midia));
-        return midiaMapper.converteSerieEntidadeParaDto(serie);
+        Serie serie = serieRepository.save(midiaMapper.converteMidiaDtoParaSerieEntidade(midia));
+        return midiaMapper.converteSerieEntidadeParaMidiaDto(serie);
     }
 
     public Page<MidiaDTO> buscarListaSeries(Pageable pageable) {
@@ -34,7 +34,7 @@ public class SerieService {
         if (series.isEmpty()) {
             throw new ItemNotFoundException(SERIE);
         }
-        Page<MidiaDTO> midias = series.map(serie -> midiaMapper.converteSerieEntidadeParaDto(serie));
+        Page<MidiaDTO> midias = series.map(serie -> midiaMapper.converteSerieEntidadeParaMidiaDto(serie));
         return midias;
     }
 
@@ -43,7 +43,7 @@ public class SerieService {
         if (series.isEmpty()) {
             throw new ItemNotFoundException(SERIE, nome);
         }
-        Page<MidiaDTO> midias = series.map(serie -> midiaMapper.converteSerieEntidadeParaDto(serie));
+        Page<MidiaDTO> midias = series.map(serie -> midiaMapper.converteSerieEntidadeParaMidiaDto(serie));
         return midias;
     }
 
@@ -53,7 +53,7 @@ public class SerieService {
         serie.setGenero(midia.getGenero());
         serie.setSinopse(midia.getSinopse());
         serieRepository.save(serie);
-        return midiaMapper.converteSerieEntidadeParaDto(serie);
+        return midiaMapper.converteSerieEntidadeParaMidiaDto(serie);
     }
 
     public void deletarSeriePorId(Long id) {

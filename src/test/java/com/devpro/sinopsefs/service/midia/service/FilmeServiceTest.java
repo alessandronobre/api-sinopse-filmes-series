@@ -47,14 +47,14 @@ public class FilmeServiceTest {
         MidiaDTO midia = MidiaDtoBuilder.builder().build();
         when(filmeRepositoryMock.buscarFilmesPorNome(any(), any())).thenReturn(new PageImpl<>(new ArrayList<>()));
         when(filmeRepositoryMock.save(any())).thenReturn(null);
-        when(midiaMapperMock.converteFilmeEntidadeParaDto(any())).thenReturn(midia);
+        when(midiaMapperMock.converteFilmeEntidadeParaMidiaDto(any())).thenReturn(midia);
 
         MidiaDTO result = filmeServiceMock.salvarFilme(midia);
 
         assertEquals(result.getId(), midia.getId());
         verify(filmeRepositoryMock, times(1)).buscarFilmesPorNome(any(), any());
         verify(filmeRepositoryMock, times(1)).save(any());
-        verify(midiaMapperMock, times(1)).converteFilmeEntidadeParaDto(any());
+        verify(midiaMapperMock, times(1)).converteFilmeEntidadeParaMidiaDto(any());
     }
 
     @Test
@@ -97,13 +97,13 @@ public class FilmeServiceTest {
     void quandoBuscarFilmesPorNomeForChamadoPassandoFilmeValidoDeveRetornarPageValido() {
         MidiaDTO midia = MidiaDtoBuilder.builder().build();
         when(filmeRepositoryMock.buscarFilmesPorNome(any(), any())).thenReturn(instanciaPageFilme());
-        when(midiaMapperMock.converteFilmeEntidadeParaDto(any())).thenReturn(midia);
+        when(midiaMapperMock.converteFilmeEntidadeParaMidiaDto(any())).thenReturn(midia);
 
         Page<MidiaDTO> result = filmeServiceMock.buscarFilmesPorNome("", instanciaPageable());
 
         assertEquals(result.getTotalPages(), 1);
         verify(filmeRepositoryMock, times(1)).buscarFilmesPorNome(any(), any());
-        verify(midiaMapperMock, times(1)).converteFilmeEntidadeParaDto(any());
+        verify(midiaMapperMock, times(1)).converteFilmeEntidadeParaMidiaDto(any());
     }
 
     @Test
@@ -123,14 +123,14 @@ public class FilmeServiceTest {
         MidiaDTO midia = MidiaDtoBuilder.builder().build();
         when(filmeRepositoryMock.findById(any())).thenReturn(Optional.of(new Filme()));
         when(filmeRepositoryMock.save(any())).thenReturn(null);
-        when(midiaMapperMock.converteFilmeEntidadeParaDto(any())).thenReturn(midia);
+        when(midiaMapperMock.converteFilmeEntidadeParaMidiaDto(any())).thenReturn(midia);
 
         MidiaDTO result = filmeServiceMock.editarFilme(midia);
 
         assertEquals(result.getId(), midia.getId());
         verify(filmeRepositoryMock, times(1)).findById(any());
         verify(filmeRepositoryMock, times(1)).save(any());
-        verify(midiaMapperMock, times(1)).converteFilmeEntidadeParaDto(any());
+        verify(midiaMapperMock, times(1)).converteFilmeEntidadeParaMidiaDto(any());
     }
 
     @Test

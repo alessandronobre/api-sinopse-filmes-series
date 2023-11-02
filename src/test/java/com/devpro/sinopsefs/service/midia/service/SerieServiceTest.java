@@ -47,14 +47,14 @@ public class SerieServiceTest {
         MidiaDTO midia = MidiaDtoBuilder.builder().build();
         when(serieRepositoryMock.buscarSeriesPorNome(any(), any())).thenReturn(new PageImpl<>(new ArrayList<>()));
         when(serieRepositoryMock.save(any())).thenReturn(null);
-        when(midiaMapperMock.converteSerieEntidadeParaDto(any())).thenReturn(midia);
+        when(midiaMapperMock.converteSerieEntidadeParaMidiaDto(any())).thenReturn(midia);
 
         MidiaDTO result = serieServiceMock.salvarSerie(midia);
 
         assertEquals(result.getId(), midia.getId());
         verify(serieRepositoryMock, times(1)).buscarSeriesPorNome(any(), any());
         verify(serieRepositoryMock, times(1)).save(any());
-        verify(midiaMapperMock, times(1)).converteSerieEntidadeParaDto(any());
+        verify(midiaMapperMock, times(1)).converteSerieEntidadeParaMidiaDto(any());
     }
 
     @Test
@@ -97,13 +97,13 @@ public class SerieServiceTest {
     void quandoBuscarSeriesPorNomeForChamadoPassandoSerieValidoDeveRetornarPageValido() {
         MidiaDTO midia = MidiaDtoBuilder.builder().build();
         when(serieRepositoryMock.buscarSeriesPorNome(any(), any())).thenReturn(instanciaPageSerie());
-        when(midiaMapperMock.converteSerieEntidadeParaDto(any())).thenReturn(midia);
+        when(midiaMapperMock.converteSerieEntidadeParaMidiaDto(any())).thenReturn(midia);
 
         Page<MidiaDTO> result = serieServiceMock.buscarSeriesPorNome("", instanciaPageable());
 
         assertEquals(result.getTotalPages(), 1);
         verify(serieRepositoryMock, times(1)).buscarSeriesPorNome(any(), any());
-        verify(midiaMapperMock, times(1)).converteSerieEntidadeParaDto(any());
+        verify(midiaMapperMock, times(1)).converteSerieEntidadeParaMidiaDto(any());
     }
 
     @Test
@@ -123,14 +123,14 @@ public class SerieServiceTest {
         MidiaDTO midia = MidiaDtoBuilder.builder().build();
         when(serieRepositoryMock.findById(any())).thenReturn(Optional.of(new Serie()));
         when(serieRepositoryMock.save(any())).thenReturn(null);
-        when(midiaMapperMock.converteSerieEntidadeParaDto(any())).thenReturn(midia);
+        when(midiaMapperMock.converteSerieEntidadeParaMidiaDto(any())).thenReturn(midia);
 
         MidiaDTO result = serieServiceMock.editarSerie(midia);
 
         assertEquals(result.getId(), midia.getId());
         verify(serieRepositoryMock, times(1)).findById(any());
         verify(serieRepositoryMock, times(1)).save(any());
-        verify(midiaMapperMock, times(1)).converteSerieEntidadeParaDto(any());
+        verify(midiaMapperMock, times(1)).converteSerieEntidadeParaMidiaDto(any());
     }
 
     @Test
