@@ -14,12 +14,4 @@ public class UsuarioMapper {
         usuario.setSenha(usuarioDto.getSenha());
         return usuario;
     }
-
-    public UsuarioDTO converteEntidadeParaDto(Usuario usuario) {
-        UsuarioDTO usuarioDto = new UsuarioDTO();
-        usuarioDto.setId(usuario.getId());
-        usuarioDto.setLogin(usuario.getLogin());
-        usuarioDto.setSenha(usuario.getSenha());
-        return usuarioDto;
-    }
 }
