@@ -39,10 +39,6 @@ public class SerieAssemblerTest {
 
         Link selfLink = Link.of("/api/serie/buscar/series").withRel("self").withType("GET");
         Link cadastroLink = Link.of("/api/serie/cadastrar").withRel("self").withType("POST");
-        System.out.println(resources.getLinks().toList());
-        System.out.println(selfLink);
-        System.out.println(cadastroLink);
-        System.out.println(selfLink);
 
         assertTrue(resources.getLinks().toList().get(0).toString().equals(selfLink.toString()));
         assertTrue(resources.getLinks().toList().get(1).toString().equals(cadastroLink.toString()));
