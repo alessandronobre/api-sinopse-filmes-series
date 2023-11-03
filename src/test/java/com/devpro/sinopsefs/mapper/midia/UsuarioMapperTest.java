@@ -1,8 +1,8 @@
-package com.devpro.sinopsefs.mapper.midia.mapper;
+package com.devpro.sinopsefs.mapper.midia;
 
 import com.devpro.sinopsefs.mapper.UsuarioMapper;
-import com.devpro.sinopsefs.mapper.midia.builders.UsuarioDtoBuilder;
 import com.devpro.sinopsefs.model.Usuario;
+import com.devpro.sinopsefs.service.usuario.builders.UsuarioDtoBuilder;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

@@ -1,12 +1,12 @@
-package com.devpro.sinopsefs.mapper.midia.mapper;
+package com.devpro.sinopsefs.mapper.midia;
 
 import com.devpro.sinopsefs.dto.MidiaDTO;
 import com.devpro.sinopsefs.mapper.MidiaMapper;
-import com.devpro.sinopsefs.mapper.midia.builders.FilmeBuilder;
-import com.devpro.sinopsefs.mapper.midia.builders.MidiaDtoBuilder;
-import com.devpro.sinopsefs.mapper.midia.builders.SerieBuilder;
 import com.devpro.sinopsefs.model.Filme;
 import com.devpro.sinopsefs.model.Serie;
+import com.devpro.sinopsefs.service.midia.builders.FilmeBuilder;
+import com.devpro.sinopsefs.service.midia.builders.MidiaDtoBuilder;
+import com.devpro.sinopsefs.service.midia.builders.SerieBuilder;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
