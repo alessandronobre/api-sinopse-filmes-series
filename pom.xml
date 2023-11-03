@@ -112,6 +112,7 @@
 								<exclude>**/exceptions/**</exclude>
 								<exclude>**/SecurityConfig.class</exclude>
 								<exclude>**/TokenDTO.class</exclude>
+								<exclude>**/RaizModel.class</exclude>
 								<exclude>**/SinopsefsApplication.class</exclude>
 							</excludes>
 						</configuration>
