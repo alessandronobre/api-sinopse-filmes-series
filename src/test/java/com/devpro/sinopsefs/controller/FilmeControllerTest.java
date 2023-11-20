@@ -87,7 +87,7 @@ public class FilmeControllerTest {
     }
 
     @Test
-    void quandoDeletarFilmePorIdForChamadoDeveRetornarItemCadastrado() {
+    void quandoDeletarFilmePorIdForChamadoDeveRetornarNoContent() {
         doNothing().when(filmeServiceMock).deletarFilmePorId(any());
 
         ResponseEntity result = filmeControllerMock.deletarFilmePorId(1L);

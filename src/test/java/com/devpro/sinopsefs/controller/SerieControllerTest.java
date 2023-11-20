@@ -87,7 +87,7 @@ public class SerieControllerTest {
     }
 
     @Test
-    void quandoDeletarSeriePorIdForChamadoDeveRetornarItemCadastrado() {
+    void quandoDeletarSeriePorIdForChamadoDeveRetornarNoContent() {
         doNothing().when(serieServiceMock).deletarSeriePorId(any());
 
         ResponseEntity result = serieControllerMock.deletarSeriePorId(1L);
